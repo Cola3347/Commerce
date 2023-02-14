@@ -1,0 +1,235 @@
+/* Header */
+header{
+  background:rgb(202, 127, 4) !important;
+}
+.top{
+  height: 92px;
+  
+}
+.navbar-nav .dropdown-menu {
+  position: absolute;
+}
+.produit .dropdown button{
+  background: none;
+  color: #333;
+  border: none;
+}
+.produit .dropdown:hover .dropdown-menu{
+  display: flex;
+  margin-top: 0;
+}
+
+.sub-menu{
+  display: flex;
+  transition: 300ms ease-in-out;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  z-index: 1;
+  left: 0;
+  width: 100%;
+  overflow: visible;
+  border-radius: 0;
+  border-bottom: 5px solid rgb(202, 127, 4);
+}
+.dropdown-toggle::after{
+content: none;
+}
+.produit{
+  position: relative;
+}
+.produit .navbar-nav,.produit .navbar-nav .nav-item{
+  position: static;
+}
+
+.produit .dropdown:hover .sub-menu{
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+.c-item {
+  height: 480px;
+}
+.c-img {
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+
+/* section produit */
+section .produit .cards-wrapper {
+  display: flex;
+  justify-content: center;
+}
+section .produit .card img {
+  max-width: 100%;
+  max-height: 100%;
+}
+section .produit .card {
+  margin: 0 0.5em;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+  border: none;
+  border-radius: 0;
+}
+section .produit .carousel-inner {
+  padding: 1em;
+}
+section .produit .carousel-control-prev,
+section .produit .carousel-control-next {
+  background-color: #e1e1e1;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@media (min-width: 768px) {
+  section .produit .card img {
+    height: 11em;
+  }
+}
+section .produitItems{
+  margin-top: 100px;
+}
+
+.remise{
+background: #f7f5f0;
+}
+.remise .ajout{
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid rgb(202, 127, 4);
+  padding: 10px;
+  transition: .5s ease-in-out;
+}
+.remise button  i{
+  padding-left: 10px;
+}
+.remise .card button:hover{
+  background: rgb(202, 127, 4);
+}
+.btncta {
+  position: relative;
+  padding: 1.4rem 4.2rem;
+  padding-right: 3.1rem;
+  font-size: 1.4rem;
+  font-family: UniversLTC;
+  color: #ca7f04;
+  letter-spacing: 0.5rem;
+  text-transform: uppercase;
+  transition: all 500ms cubic-bezier(0.77, 0, 0.175, 1);
+  cursor: pointer;
+  user-select: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+.btncta a{
+  transition-delay: 0;
+  z-index: 1;
+  position: relative;
+}
+.btncta:hover a{
+  transition-delay: 500ms;
+  color: white !important;
+}
+.from-right::before {
+  left: 0;
+  border: 1px solid #ca7f04;
+  border-right-color: rgb(202, 127, 4);
+  border-left: 0;
+  border-right: 0;
+}
+.btncta:hover::before {
+  transition-delay: 0s;
+  width: 100%;
+}
+.btncta::before, .btncta::after {
+  content: '';
+  position: absolute;
+  transition: inherit;
+  z-index: -1;
+}
+.from-right::before, .from-right::after {
+  top: 0;
+  width: 0;
+  height: 100%;
+}
+.from-right::after {
+  right: 0;
+}
+.btncta:hover::after {
+  color: white;
+  background: #ca7f04;
+  transition-delay: .35s;
+  z-index: 0;
+  width: 100%;
+}
+
+.next-prev a{
+    border: 1px solid rgb(202, 127, 4);
+    transition: all .3s ease-in-out;
+}
+.next-prev a:hover{
+  background-color: rgb(202, 127, 4);
+}
+
+/* Footer */
+footer{
+  background: rgba(121, 120, 120,.5);
+}
+footer .row .col-4{
+  margin-top: 50px;
+}
+footer .carte{
+  margin-top: 20px;
+}
+footer .carte ul{
+  list-style: none;
+}
+footer .carte li{
+  padding-left: 50px;
+}
+.copy{
+  background: #ca7f04;
+  height: 55px;
+}
+
+.login {
+  width: 360px;
+  height: min-content;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.login form {
+  font-size: 20px;
+}
+
+.login form .form-group input{
+ border-color: #333;
+}
+
+.login form input[type="submit"] {
+  font-size: 20px;
+  margin-top: 15px;
+}
+.login form input[type="submit"]{
+  color: #ffffff;
+  border: none;
+  background: #ca7f04;
+}
+.login form input[type="submit"]:valid{
+border-color: none;
+}
+.login form a:hover{
+text-decoration: underline;
+} 
+
+/* Produit */
+#type_miel{
+  display: none;
+}
+#type_miel li{
+margin-left: 20px;
+}
