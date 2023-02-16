@@ -51,7 +51,7 @@ export default function Home( ) {
                             <>
                                 <div>
                                     {products.data.map((product: { attributes: {
-                                        image: any; slug: any; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; price: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined 
+                                         slug: any; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; price: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined 
 }; id: Key | null | undefined }) => (
                                         <Link href={`/products/${product.attributes.slug}`}>
                                         <div key={product.id} id="carouselExampleIndicators2" className="carousel slide" data-ride="carousel">
@@ -105,7 +105,7 @@ export default function Home( ) {
         </>
     )
 }
-export async function getStaticProps() {
+/* export async function getStaticProps() {
     //fetch the product
       const product_res= await fetch(`${API_URL}/api/products/`)
       const products= await product_res.json()
@@ -115,4 +115,4 @@ export async function getStaticProps() {
         products
       }
     }
-}
+} */

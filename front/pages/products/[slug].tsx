@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import { fromImageToUrl , API_URL } from '@/utils/urls'
 import { twoDecimal } from '@/utils/format'
-import products from '@/products.json'
+// import products from '@/products.json'
 import Header from '@/components/components/Header/Header'
 import Image from 'next/image'
 
-const product = products.data[0]
+// const product = products.data[0]
 
-const HomePage = () => {
+const HomePage = ( {product}) => {
     return (
         <>
           <Head>
@@ -38,9 +38,7 @@ const HomePage = () => {
                             <input type="text" className="form-control" placeholder="Rechercher..." aria-label="Username" aria-describedby="basic-addon1" />
                             <button className="input-group-text" id="basic-addon1"><i className="fa-solid fa-magnifying-glass"></i></button>
                         </div>
-                    </form>
-                    console.log({product.attributes.image});
-                    
+                    </form>                    
                 <h2>{product.attributes.name}</h2>
                 <p>Madagascar</p>
                 <h4>{twoDecimal(product.attributes.price)}€</h4>
@@ -64,7 +62,7 @@ const HomePage = () => {
         </>
     )
 }
-/* export async function getStaticProps({params : {slug}}) {
+export async function getStaticProps({params : slug}) {
     //fetch the product
       const product_res= await fetch(`${API_URL}/api/products/?slug=${slug}`)
       const found= await product_res.json()
@@ -75,17 +73,17 @@ const HomePage = () => {
       }
     }
   
-  } */
-/* export async function getStaticPaths() {
+  }
+export async function getStaticPaths() {
     //retrieve all possible Paths
     const product_res= await fetch(`${API_URL}/api/products/`)
     const products= await product_res.json()
   //return them to NextJS context
   return{
-    props: products.data.map((product: { attributes: { slug: any } }) =>({
+    paths: products.data.map(product  =>({
         params: {slug: String(product.attributes.slug)}
     })),
     fallback: false // tell NextJs to show 404 if the params 
 } 
-} */
+}
 export default HomePage;
