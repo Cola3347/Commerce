@@ -39,7 +39,7 @@ export default function Header(){
                                         </div>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" href="/pages/cart/cart"><i className="fa-solid fa-cart-shopping"></i></Link>
+                                        <Link className="nav-link" href="/cart/cart"><i className="fa-solid fa-cart-shopping"></i></Link>
                                     </li>
                                     <li className="nav-item">
                                         <div className="dropdown">

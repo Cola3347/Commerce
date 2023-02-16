@@ -105,14 +105,3 @@ export default function Home( ) {
         </>
     )
 }
-/* export async function getStaticProps() {
-    //fetch the product
-      const product_res= await fetch(`${API_URL}/api/products/`)
-      const products= await product_res.json()
-    //return product as Props
-    return{
-      props:{ 
-        products
-      }
-    }
-} */
