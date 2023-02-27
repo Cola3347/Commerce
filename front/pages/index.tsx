@@ -2,14 +2,18 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import products from '../products.json'
+// import products from '../products.json'
 import Link from 'next/link'
 import Header from '@/components/components/Header/Header'
+import Footer from '@/components/components/Footer/Footer'
 import { fromImageToUrl,API_URL } from '@/utils/urls'
 import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, Key } from 'react'
 
 
-export default function Home( ) {
+
+
+export default function Home( {products}) {
+    
     return (
         <>
             <Head>
@@ -19,67 +23,53 @@ export default function Home( ) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-            <section className="article mt-5">
-                <div id="hero-carousel" className="carousel slide" data-bs-ride="carousel">
-                    <div className="carousel-inner">
-                        <div className="carousel-item active c-item">
-                            <img src="images/section.jpg" className="d-block w-100 c-img" alt="Slide 1" />
-                            <div className="carousel-caption top-0 mt-4">
-                                <h1 className="display-1 fw-bolder text-capitalize">Ilanga Nature</h1>
-                                <p className="mt-5 fs-4">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Temporibus nulla cumque voluptates deleniti earum natus officiis sed facilis neque autem.
-                                </p>
-                                <p className="mt-2 fs-4">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Temporibus nulla cumque voluptates deleniti earum natus officiis sed facilis neque autem.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/*   <!-- Section Photo End -->
-
-        <!-- Section remise --> */}
+           
+        {/*<!-- Section remise --> */}
             <section className="remise pt-5 pb-5">
                 <div className="container">
                     <div className="row">
-                        <div className="text-center">
+                        <div className=" col-12 text-center">
                             <h3 className="mb-3 text-uppercase">-10% sur la selection</h3>
                             <h2 className="mb-2 text-warning font-italic">du Chef Eric</h2>
                         </div>
                         <div className="col-12 d-flex d-flex-row mb-3">
                             <>
                                 <div>
-                                    {products.data.map((product: { attributes: {
-                                         slug: any; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; price: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined 
-}; id: Key | null | undefined }) => (
-                                        <Link href={`/products/${product.attributes.slug}`}>
-                                        <div key={product.id} id="carouselExampleIndicators2" className="carousel slide" data-ride="carousel">
+                                        <div  id="carouselExampleIndicators2" className="carousel slide" data-ride="carousel">
                                             <div className="carousel-inner">
                                                 <div className="carousel-item active">
-                                                    <div className="row">
-                                                        <div className="col-md-4 mb-3 ">
-                                                            <div className="card">
-                                                                <Image src= {fromImageToUrl(product.attributes.image)} width={250} height={200} alt="" />
-                                                                
-                                                                {/* <img className="img-fluid" alt="100%x280"
-                                                                    src="https://www.ilanga-nature.com/web/image/product.product/1726/image_1024/%5B5901267%5D%20Miel%20de%20For%C3%AAts%20Humides%20140g?unique=9848b43" /> */}
-                                                                <div className="card-body">
-                                                                    <h5 className="card-title text-center">{product.attributes.name} </h5>
-                                                                    <h5 className="card-title text-center">{product.attributes.price} €</h5>
-                                                                    <div className="d-flex justify-content-center">
-                                                                        <button type="submit" className="ajout btn-lg">Ajouter au panier<i className="fa-solid fa-cart-shopping"></i></button>
-                                                                    </div>
-                                                                </div>
+                                                    {/* <div className="row"> */}
+                                                        <div className="col-md-8 m-auto ">
+                                                        <table>
+                                                            <tr>
+                                                            {products.data.map(product => (
+                                                                <td>
+                                                                    <div key={product.id} className="card">
+                                                                    <Link href={`/products/${product.attributes.slug}`}>
+                                                                        {/* <img className="img-fluid" alt="100%x280"
+                                                                            src="https://www.ilanga-nature.com/web/image/product.product/1726/image_1024/%5B5901267%5D%20Miel%20de%20For%C3%AAts%20Humides%20140g?unique=9848b43" /> */}
+                                                                        <div className="card-body">
+                                                                        <img  src= {fromImageToUrl(product.attributes.image)} id='img_prod'  alt="" />
 
-                                                            </div>
+                                                                            <h5 className="card-title text-center">{product.attributes.name} </h5>
+                                                                            <h5 className="card-title text-center">{product.attributes.price} €</h5>
+                                                                            <div className="d-flex justify-content-center">
+                                                                                <button type="submit" className="ajout btn-lg">Ajouter au panier<i className="fa-solid fa-cart-shopping"></i></button>
+                                                                            </div>
+                                                                        </div>
+                                                                        </Link>
+                                                                    </div>
+                                                                
+                                                                </td>
+                                                            ))}
+                                                            </tr>
+                                                            </table>
                                                         </div>
-                                                    </div>
+                                                    {/* </div> */}
                                                 </div>
                                             </div>
                                         </div>
-                                        </Link>
-                                    ))}
+                                        
                                 </div>
                             </>
                         </div>
@@ -102,6 +92,20 @@ export default function Home( ) {
                 </div>
             </section>
             {/* <!-- Section remise End --> */}
+            <Footer/>
         </>
     )
 }
+export async function getStaticProps() {
+    //fetch the product
+      const product_res= await fetch(`${API_URL}/api/products/?populate=*`)
+      const products= await product_res.json()
+    //   const res= products.data
+    //return product as Props
+    return{
+      props:{ 
+        products 
+      }
+    }
+  
+  }

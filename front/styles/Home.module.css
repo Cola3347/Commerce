@@ -276,3 +276,11 @@
     transform: rotate(0deg);
   }
 }
+
+
+/* francky style*/
+#img_prod{
+  width: 25%;
+  heiht:auto;
+  align-items: center;
+} 

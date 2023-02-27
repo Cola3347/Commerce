@@ -5,12 +5,12 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337
  * Works for local and deployed strtapis
  * @param {any} image 
  */
-export const fromImageToUrl = (image) => {
+export const fromImageToUrl = image => {
     if (!image){
         return "/vercel.svg"
     }
-    if(image.url?.indexOf('/')===0){
-        return `${API_URL}${image.url}`
+    if(image.data.attributes.url?.indexOf('/')===0){
+        return `${API_URL}${image.data.attributes.url}`
     }
-    return image.url
+    return image.data.attributes.url
 }

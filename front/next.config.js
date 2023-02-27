@@ -8,7 +8,8 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'www.ilanga-nature.com',
+        // hostname: 'www.ilanga-nature.com',
+        hostname: 'http://localhost:1337',
         
       },
     ],

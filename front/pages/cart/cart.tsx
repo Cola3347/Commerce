@@ -1,7 +1,16 @@
 import React from 'react'
 import Header from '@/components/components/Header/Header'
+import products from '@/products.json'
+import Script from 'next/script'
+import Counter from '@/components/components/counter/count'
+import { useState } from 'react'
+import count from '@/components/components/counter/count'
+
+
+
 
 export default function ShopCart() {
+  
   return (
     <>
         <Header/>
@@ -11,33 +20,31 @@ export default function ShopCart() {
           <li className="page-item"><a className="page-link" href="#">Adresse</a></li>
           <li className="page-item"><a className="page-link" href="#">Confirmer La Commande</a></li>
         </ul>
-          <div className="row">
-            <div className="col-8 mt-5 d-flex justify-content-between ">          
+        
+            <div className="row">
+            <div className="col-lg-8 col-md-6 col-sm-12 mt-5 d-flex justify-content-between ">          
               <table className="table">
                 <thead>
                   <tr>
                     <th>Article</th>
                     <th>Quantité</th>
-                    <th>Prix</th>
+                    <th>Prix Unitaire</th>
+                    <th>Prix Total</th>
                   </tr>
                 </thead>
+                {products.data.map(product =>{
+                return(
                 <tbody>
                   <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                  </tr>
-                  <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
+                    <td>{product.attributes.name}</td>
+                    <td>
+                      <Counter />
+                    </td>
+                    <td>{product.attributes.price} €</td>
+                    <td>{product.attributes.price} €</td>
                   </tr>
                 </tbody>
+                )})}
               </table>
             </div>
             <div className="col-4">
@@ -49,7 +56,7 @@ export default function ShopCart() {
                   <table>
                     <tr>
                       <td>Sous-Total :</td>
-                      <td className='px-5'>9.25€</td>
+                      <td className='px-5'>9.25 €</td>
                     </tr>
                   </table>
                 </li>
@@ -57,7 +64,7 @@ export default function ShopCart() {
                 <table>
                     <tr>
                       <td>Taxes :</td>
-                      <td className='px-5'>0.25€</td>
+                      <td className='px-5'>0.25 €</td>
                     </tr>
                   </table>
                 </li>
@@ -68,8 +75,7 @@ export default function ShopCart() {
               </div>
             </div>
             </div>
-          </div>
-          
+          </div>      
         </div>
 
     </>
