@@ -1,19 +1,20 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-// import products from '../products.json'
 import Link from 'next/link'
 import Header from '@/components/components/Header/Header'
 import Footer from '@/components/components/Footer/Footer'
-import { fromImageToUrl,API_URL } from '@/utils/urls'
-import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, Key } from 'react'
+import { fromImageToUrl, API_URL } from '@/utils/urls'
+import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, Key, useState } from 'react'
+import useSWR from 'swr'
+import { Fetcher } from '@/lib/api'
 
-
-
-
-export default function Home( {products}) {
-    
+export default function Home({ products }) {
+    const [pageIndex, setPageIndex] = useState(1)
+    const { data } = useSWR(`${API_URL}/api/products/?populate=*&pagination[page]=${pageIndex}&pagination[pageSize]=3`, Fetcher,
+        {
+            fallbackData: products
+        }
+    )
     return (
         <>
             <Head>
@@ -23,8 +24,8 @@ export default function Home( {products}) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-           
-        {/*<!-- Section remise --> */}
+
+            {/*<!-- Section remise --> */}
             <section className="remise pt-5 pb-5">
                 <div className="container">
                     <div className="row">
@@ -34,42 +35,42 @@ export default function Home( {products}) {
                         </div>
                         <div className="col-12 d-flex d-flex-row mb-3">
                             <>
-                                <div>
-                                        <div  id="carouselExampleIndicators2" className="carousel slide" data-ride="carousel">
-                                            <div className="carousel-inner">
-                                                <div className="carousel-item active">
-                                                    {/* <div className="row"> */}
-                                                        <div className="col-md-8 m-auto ">
-                                                        <table>
-                                                            <tr>
-                                                            {products.data.map(product => (
-                                                                <td>
-                                                                    <div key={product.id} className="card">
-                                                                    <Link href={`/products/${product.attributes.slug}`}>
-                                                                        {/* <img className="img-fluid" alt="100%x280"
+                                <div className='row'>
+                                            {products.data.map(product => (
+                                                <div className='col-lg-4 col-md-6 col-sm-12'>
+                                                    <div key={product.id} className="card">
+                                                        <Link href={`/products/${product.attributes.slug}`}>
+                                                            {/* <img className="img-fluid" alt="100%x280"
                                                                             src="https://www.ilanga-nature.com/web/image/product.product/1726/image_1024/%5B5901267%5D%20Miel%20de%20For%C3%AAts%20Humides%20140g?unique=9848b43" /> */}
-                                                                        <div className="card-body">
-                                                                        <img  src= {fromImageToUrl(product.attributes.image)} id='img_prod'  alt="" />
+                                                            <div className="card-body">
+                                                                <img src={fromImageToUrl(product.attributes.image)} id='img_prod' alt="" />
 
-                                                                            <h5 className="card-title text-center">{product.attributes.name} </h5>
-                                                                            <h5 className="card-title text-center">{product.attributes.price} €</h5>
-                                                                            <div className="d-flex justify-content-center">
-                                                                                <button type="submit" className="ajout btn-lg">Ajouter au panier<i className="fa-solid fa-cart-shopping"></i></button>
-                                                                            </div>
-                                                                        </div>
-                                                                        </Link>
-                                                                    </div>
-                                                                
-                                                                </td>
-                                                            ))}
-                                                            </tr>
-                                                            </table>
-                                                        </div>
-                                                    {/* </div> */}
+                                                                <h5 className="card-title text-center">{product.attributes.name} </h5>
+                                                                <h5 className="card-title text-center">{product.attributes.price} €</h5>
+                                                                <div className="d-flex justify-content-center">
+                                                                    <button type="submit" className="ajout btn-lg">Ajouter au panier<i className="fa-solid fa-cart-shopping"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </Link>
+                                                    </div>
+
                                                 </div>
-                                            </div>
-                                        </div>
-                                        
+                                            ))}
+                                    <div className="space-x-2 space-y-2">
+                                        <button className={`md:p-2 rounded py-2 p-2 ${
+                                            pageIndex===1 ? 'bg-gray-300' : 'bgnd'
+                                            }`} 
+                                            disabled={pageIndex===1} onClick={() => pageIndex - 1}>
+                                               {' '} <i className="fa fa-arrow-left"></i>
+                                        </button>
+                                        <button className={`md:p-2 rounded py-2 p-2 ${
+                                            pageIndex=== (data && data.meta.pagination.pageCount) ?'bg-gray-300' : 'bgnd'
+                                            }`} disabled={pageIndex=== (data && data.meta.pagination.pageCount)}
+                                            onClick={() => setPageIndex(pageIndex + 1)}>
+                                                <i className="fa fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                    <span>{`${pageIndex} of ${pageIndex=== (data.meta.pagination.pageCount)}`}</span>
                                 </div>
                             </>
                         </div>
@@ -92,20 +93,19 @@ export default function Home( {products}) {
                 </div>
             </section>
             {/* <!-- Section remise End --> */}
-            <Footer/>
+            <Footer />
         </>
     )
 }
 export async function getStaticProps() {
     //fetch the product
-      const product_res= await fetch(`${API_URL}/api/products/?populate=*`)
-      const products= await product_res.json()
+    const product_res = await Fetcher(`${API_URL}/api/products/?populate=*&pagination[page]=1&pagination[pageSize]=3`)
     //   const res= products.data
     //return product as Props
-    return{
-      props:{ 
-        products 
-      }
+    return {
+        props: {
+            products: product_res
+        }
     }
-  
-  }
+
+}

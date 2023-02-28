@@ -5,6 +5,7 @@ import { twoDecimal } from '@/utils/format'
 import Header from '@/components/components/Header/Header'
 import Image from 'next/image'
 import Counter from '@/components/components/counter/count'
+import Footer from '@/components/components/Footer/Footer'
 
 
 // const product = products.data[0]
@@ -30,7 +31,6 @@ const HomePage = ( { product }) => {
                   <div className="col-12">
                     
                   <label><b>Tous les produits {'>'} </b> {product.attributes.category.data.attributes.name} {'>'} {product.attributes.name} </label>
-                {/* <Image className='mx-5' src="https://www.ilanga-nature.com/web/image/product.template/1786/image_256/%5B5902189%5D%20Vanille%20Bourbon%203%C2%A0gousses%20%28en%20tube%29?unique=7e7afaa" width={300} height={400}  alt="" /> */}
                 <img  src= {fromImageToUrl(product.attributes.image)} id='prod_img' alt="" />
                   
                   </div>
@@ -51,10 +51,9 @@ const HomePage = ( { product }) => {
                 </div>
                     <button type="submit" className="ajout btn btn-outline-warning text-dark btn-lg"><i className="fa-sharp fa-solid fa-bolt"></i> Acheter Maintenant</button><i className="fa-regular fa-heart"></i>
               </div>
-              {/* <img src={fromImageToUrl(product.attributes.image)} alt="" /> */}
             </div>
           </div>
-          
+          <Footer />
 
         </>
         
@@ -63,9 +62,10 @@ const HomePage = ( { product }) => {
 }
 export async function getStaticProps({params : slug}) {
     //fetch the product
-      const product_res= await fetch(`${API_URL}/api/products/?populate=*&slug=${slug}`)
+      const product_res= await fetch(`${API_URL}/api/products/?filters[slug]=${slug}`)
       console.log(product_res)
       const found= await product_res.json()
+      console.log(found)
       const result= found.data
       
     //return product as Props
@@ -82,7 +82,7 @@ export async function getStaticPaths() {
     const products= await product_res.json()
   //return them to NextJS context
   return{
-    paths: products.data.map(product =>({
+    paths: products.data.map((product: { attributes: { slug: any } }) =>({
         params: {slug: String(product.attributes.slug)}
     })),
     fallback: false // tell NextJs to show 404 if the params 

@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '@/components/components/Header/Header'
 import Head from 'next/head'
+import Footer from '@/components/components/Footer/Footer'
 
 export default function connexion() {
   return (
@@ -34,6 +35,7 @@ export default function connexion() {
                 </form>
             </div>
         </div>
+        <Footer />
     </>
   )
 }

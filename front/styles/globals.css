@@ -279,6 +279,9 @@ margin-left: 20px;
   height: auto;
   align-items: center;
 }
+.bgnd{
+  background-color: #ca7f04;
+}
 /* Counter*/
 .num {
   width : 35%;

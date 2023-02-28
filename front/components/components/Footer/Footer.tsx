@@ -2,7 +2,8 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div className="container">
+    <div className="bg-dark text-white p-2">
+        <div className="container">
                 <div className="row">
                     <div className="col-4">
                         <h4 className="text-uppercase fw-bold">à propos</h4>
@@ -46,6 +47,7 @@ export default function Footer() {
                     </ul>
                 </div>
         </div>
+    </div>
   )
 }
 
