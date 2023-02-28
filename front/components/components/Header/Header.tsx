@@ -34,6 +34,7 @@ export default function Header(){
                                             </button>
                                             <ul className="dropdown-menu">
                                                 <li><Link className="dropdown-item" href="/connexion/connexion">Se connecter</Link></li>
+                                                <li><Link className="dropdown-item" href="/connexion/inscription">S'inscrire</Link></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -68,7 +69,7 @@ export default function Header(){
 
                     <nav className="product d-flex justify-content-center">
                         <div className="dropdown">
-                            <button type="button" className="btn btn-warning dropbtn m-2" data-bs-toggle="dropdown">
+                            <button type="button" className="btn btn-warning dropbtn m-2" /* data-bs-toggle="dropdown" */>
                                 <b>MIEL</b>
                             </button>
                             <ul className="dropdown-content">
@@ -77,18 +78,22 @@ export default function Header(){
                                 <li><a className="dropdown-item" href="#">900g</a></li>
                             </ul>
                         </div>
+                        
                         <div className="dropdown">
-                            <button type="button" className="btn btn-warning dropbtn m-2" data-bs-toggle="dropdown">
-                                <b>VANILLE</b>
+                        
+                            <button type="button" className="btn btn-warning dropbtn m-2" /* data-bs-toggle="dropdown" */>
+                            <Link className="dropdown-item" href="/products/Vanille/Vanille"><b>VANILLE</b></Link>
                             </button>
+                        
+                            
                             <ul className="dropdown-content">
-                                <li><a className="dropdown-item" href="#">En gousse</a></li>
+                                <li><a className="dropdown-item" href="#">En Gousse</a></li>
                                 <li><a className="dropdown-item" href="#">En Poudre</a></li>
                                 <li><a className="dropdown-item" href="#">Extrait</a></li>
                             </ul>
                         </div>
                         <div className="dropdown">
-                            <button type="button" className="btn btn-warning dropbtn m-2" data-bs-toggle="dropdown">
+                            <button type="button" className="btn btn-warning dropbtn m-2" /* data-bs-toggle="dropdown" */>
                                 <b>THE</b>
                             </button>
                             <ul className="dropdown-content">
@@ -97,7 +102,7 @@ export default function Header(){
                             </ul>
                         </div>
                         <div className="dropdown">
-                            <button type="button" className="btn btn-warning dropbtn m-2" data-bs-toggle="dropdown">
+                            <button type="button" className="btn btn-warning dropbtn m-2" /* data-bs-toggle="dropdown" */>
                                 <b>CAFE</b>
                             </button>
                             <ul className="dropdown-content">

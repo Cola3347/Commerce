@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '@/components/components/Header/Header'
 import Head from 'next/head'
 import Footer from '@/components/components/Footer/Footer'
+import Link from 'next/link'
 
 export default function connexion() {
   return (
@@ -29,7 +30,7 @@ export default function connexion() {
                     </div>
                     <input className="btn w-100" type="submit" value="Connexion" />
                     <div className="justify-content-between mt-2 d-flex small text-center">
-                        <a href="enregistrer.html" className="nav-link">Vous n'avez pas de compte ?</a>
+                        <Link href="inscription" className="nav-link">Vous n'avez pas de compte ?</Link>
                         <a href="#" className="nav-link">Réinitialiser le mot de passe</a>
                     </div>
                 </form>

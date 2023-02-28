@@ -26,7 +26,7 @@ const HomePage = ( { product }) => {
           <Header />
           <div className='container mt-5 p-5'>
             <div className="row">
-              <div className="col-6 mt-3">
+              <div className="col-lg-6 col-sm-12 mt-3">
                 <div className="row">
                   <div className="col-12">
                     
@@ -34,11 +34,10 @@ const HomePage = ( { product }) => {
                 <img  src= {fromImageToUrl(product.attributes.image)} id='prod_img' alt="" />
                   
                   </div>
-                <button className='btn btn-outline-warning col-3'>Description</button>
-                <p>{product.attributes.content}</p>             
+                             
               </div>
               </div>
-              <div className="col-6 mt-3">
+              <div className="col-lg-6 col-sm-12 mt-3">
                                        
                 <h2>{product.attributes.name}</h2>
                 <p>Madagascar</p>
@@ -51,6 +50,10 @@ const HomePage = ( { product }) => {
                 </div>
                     <button type="submit" className="ajout btn btn-outline-warning text-dark btn-lg"><i className="fa-sharp fa-solid fa-bolt"></i> Acheter Maintenant</button><i className="fa-regular fa-heart"></i>
               </div>
+              <div className="col-lg-6 col-sm-12 mt-3">
+                <button className='btn btn-outline-warning col-3'>Description</button>
+                <p>{product.attributes.content}</p>
+              </div>
             </div>
           </div>
           <Footer />
@@ -62,7 +65,8 @@ const HomePage = ( { product }) => {
 }
 export async function getStaticProps({params : slug}) {
     //fetch the product
-      const product_res= await fetch(`${API_URL}/api/products/?filters[slug]=${slug}`)
+    console.log(slug)
+      const product_res= await fetch(`${API_URL}/api/products/?filters[slug]=${slug.slug}&populate=*`)
       console.log(product_res)
       const found= await product_res.json()
       console.log(found)
