@@ -4,17 +4,19 @@ import Link from 'next/link'
 import Header from '@/components/components/Header/Header'
 import Footer from '@/components/components/Footer/Footer'
 import { fromImageToUrl, API_URL } from '@/utils/urls'
-import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, Key, useState } from 'react'
+import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, Key, useState, useEffect } from 'react'
 import useSWR from 'swr'
 import { Fetcher } from '@/lib/api'
+import { signOut, useSession } from 'next-auth/react'
 
-export default function Home({ products }) {
+export default function Home({ products, categories , types }) {
     const [pageIndex, setPageIndex] = useState(1)
     const { data } = useSWR(`${API_URL}/api/products/?populate=*&pagination[page]=${pageIndex}&pagination[pageSize]=3`, Fetcher,
         {
             fallbackData: products
         }
     )
+    
     return (
         <>
             <Head>
@@ -24,7 +26,6 @@ export default function Home({ products }) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-
             {/*<!-- Section remise --> */}
             <section className="remise pt-5 pb-5">
                 <div className="container">
@@ -40,8 +41,6 @@ export default function Home({ products }) {
                                                 <div className='col-lg-4 col-md-6 col-sm-12'>
                                                     <div key={product.id} className="card">
                                                         <Link href={`/products/${product.attributes.slug}`}>
-                                                            {/* <img className="img-fluid" alt="100%x280"
-                                                                            src="https://www.ilanga-nature.com/web/image/product.product/1726/image_1024/%5B5901267%5D%20Miel%20de%20For%C3%AAts%20Humides%20140g?unique=9848b43" /> */}
                                                             <div className="card-body">
                                                                 <img src={fromImageToUrl(product.attributes.image)} id='img_prod' alt="" />
 
@@ -98,13 +97,18 @@ export default function Home({ products }) {
     )
 }
 export async function getStaticProps() {
+    const category_res = await Fetcher(`${API_URL}/api/categories/`)
+
+    const type_res = await Fetcher(`${API_URL}/api/types/`)
     //fetch the product
     const product_res = await Fetcher(`${API_URL}/api/products/?populate=*&pagination[page]=1&pagination[pageSize]=3`)
     //   const res= products.data
     //return product as Props
     return {
         props: {
-            products: product_res
+            products: product_res,
+            categories: category_res,
+            types: type_res
         }
     }
 

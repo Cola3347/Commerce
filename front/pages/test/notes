@@ -1,0 +1,25 @@
+//variable
+const { data: session } = useSession();
+
+    useEffect(() => {
+    if (session == null) return;
+        console.log('session.jwt', session.jwt);
+    }, [session]);
+
+    //Header
+<Header types={undefined} />
+            <h1>{session ? 'Authenticated' : 'Not Authenticated'}</h1>
+            {session && (
+                <div style={{ marginBottom: 10 }}>
+                <h3>Session Data</h3>
+                <div>Email: {session.user.email}</div>
+                <div>JWT from Strapi: Check console</div>
+                </div>
+            )}
+            {session ? (
+                <button onClick={signOut}>Sign out</button>
+            ) : (
+                <Link href="/connexion/sign-in">
+                <button>Sign In</button>
+                </Link>
+            )}

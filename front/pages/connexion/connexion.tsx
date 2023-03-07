@@ -3,8 +3,10 @@ import Header from '@/components/components/Header/Header'
 import Head from 'next/head'
 import Footer from '@/components/components/Footer/Footer'
 import Link from 'next/link'
+import { API_URL } from '@/utils/urls'
 
-export default function connexion() {
+export default function connexion( {authData}) {
+    console.log(authData)
   return (
     <>
         <Head>
@@ -39,4 +41,36 @@ export default function connexion() {
         <Footer />
     </>
   )
+}
+export async function getServerSideProps() {
+    //login Information
+    const loginInfo = {
+        identifier: 'test@test.com',
+        password: 'test123'
+    }
+
+    const login = await fetch(`${API_URL}/api/auth/local`, {
+        method :"POST",
+        headers : {
+            'Accept': 'application/json',
+            'content-Type': 'application/json',
+        },
+        body : JSON.stringify(loginInfo)
+    })
+    const loginResponse = await login.json()
+
+    
+
+    const res = await fetch(`${API_URL}/api/payed-articles/`,  {
+        headers: {
+            Authorization: `Bearer ${loginResponse.jwt}`
+        }
+    })
+    const articles = await res.json()
+    return {
+        props : {
+            articles : articles,
+            authData: loginResponse,
+        },
+    }
 }

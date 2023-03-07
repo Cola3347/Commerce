@@ -4,13 +4,12 @@ import products from '@/products.json'
 import Script from 'next/script'
 import Counter from '@/components/components/counter/count'
 import { useState } from 'react'
-import count from '@/components/components/counter/count'
+// import count from '@/components/components/counter/count'
+import { Fetcher } from '@/lib/api'
+import { API_URL } from '@/utils/urls'
 
 
-
-
-export default function ShopCart() {
-  
+export default function ShopCart( {products} ) {
   return (
     <>
         <Header/>
@@ -23,7 +22,7 @@ export default function ShopCart() {
         
             <div className="row">
             <div className="col-lg-8 col-md-6 col-sm-12 mt-5 d-flex justify-content-between ">          
-              <table className="table">
+              <table className="table"  >
                 <thead>
                   <tr>
                     <th>Article</th>
@@ -40,8 +39,8 @@ export default function ShopCart() {
                     <td>
                       <Counter />
                     </td>
-                    <td>{product.attributes.price} €</td>
-                    <td>{product.attributes.price} €</td>
+                    <td><input type="number" value={product.attributes.price} name='price' id='price' />€</td>
+                    <td><input type="text" id="tot_Amount" /> €</td>
                   </tr>
                 </tbody>
                 )})}
@@ -77,7 +76,19 @@ export default function ShopCart() {
             </div>
           </div>      
         </div>
-
+        {/* <Script src='../../styles/counterPrice.js'/> */}
     </>
   )
+}
+export async function getStaticProps() {
+  //fetch the product
+  const product_res = await Fetcher(`${API_URL}/api/products/?populate=*&pagination[page]=1&pagination[pageSize]=3`)
+  //   const res= products.data
+  //return product as Props
+  return {
+      props: {
+          products: product_res
+      }
+  }
+
 }

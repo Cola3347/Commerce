@@ -1,10 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { API_URL } from "@/utils/urls";
+import { Fetcher } from "@/lib/api";
+import { setToken, unsetToken } from "@/lib/auth";
+import { useUser } from "@/lib/authContext";
 
 
-export default function Header(){
+const Header = ( ) => {
+    const [data, setData] = useState({
+        identifier:'',
+        password:''
+    });
+    
+    const { user, loading } = useUser();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const getData = await fetch(`${API_URL}/api/auth/local`, {
+            method : 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                identifier: data.identifier,
+                password: data.password
+            })
+        });
+        const responseData = await  getData.json();
+        console.log(responseData);
+        setToken(responseData);
+    }
+    const logout = () => {
+        unsetToken();
+      };
+    
+    const handleChange = (e) =>{
+        setData({...data, [e.target.name] : [e.target.value]});
+    };
     return (
+        <>
             <div className="top mb-5">
                 <header className="fixed-top">
                     <div className="container">
@@ -18,7 +54,7 @@ export default function Header(){
                                         <a href="#demo" className="btn" data-bs-toggle="collapse"><i className="fa-solid fa-magnifying-glass fa-2x"></i></a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">Qui sommes nous?</a>
+                                        <Link className="nav-link" href="#">Payed Articles</Link>
                                     </li>
                                 </ul>
                                 <div className="logo">
@@ -33,8 +69,78 @@ export default function Header(){
                                                 <i className="fa-solid fa-user"></i>
                                             </button>
                                             <ul className="dropdown-menu">
-                                                <li><Link className="dropdown-item" href="/connexion/connexion">Se connecter</Link></li>
-                                                <li><Link className="dropdown-item" href="/connexion/inscription">S'inscrire</Link></li>
+                                                {/* <li>
+                                                    <Link className="dropdown-item" href="/connexion/connexion">
+                                                        Se connecter
+                                                    </Link>
+                                                </li> */}
+                                                {!loading && 
+                                                    (user ? (
+                                                        <li>
+                                                            <Link href='/test/profile'>
+                                                                <a className="md:p-2 py-2 block hoover:text-orange-400">
+                                                                    Profile
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                        ):(
+                                                            ''
+                                                    ))
+                                                }
+                                                {!loading && 
+                                                    (user ? (
+                                                        <li>
+                                                            <Link href='/test/profile'>
+                                                                <a className="md:p-2 py-2 block hoover:text-orange-400"
+                                                                    onClick={logout}
+                                                                    style={{cursor: 'pointer'}}
+                                                                >
+                                                                    Logout
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                        ):(
+                                                            ''
+                                                    ))
+                                                }
+                                                {!loading && !user ? (
+                                                    <>
+                                                        <li>
+                                                            <form onSubmit={handleSubmit} className="form-inline">
+                                                                <input type="text" 
+                                                                    name="identifier" 
+                                                                    onChange={handleChange}
+                                                                    placeholder='Username'
+                                                                    className="md: p-2 form-input py-2 rounded mx-2"
+                                                                    value={data.identifier}
+                                                                    required
+                                                                />
+                                                                <input type="password" 
+                                                                    name="password" 
+                                                                    onChange={handleChange}
+                                                                    placeholder='Password'
+                                                                    className="md: p-2 form-input py-2 rounded mx-2"
+                                                                    value={data.password}
+                                                                    required
+                                                                />
+                                                                <button className="md:p-2 rounded text-black bg-orange-400"
+                                                                    type="submit"
+                                                                >
+                                                                    Login
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </>
+                                                     ):(
+                                                        ''
+                                                )
+
+                                                }
+                                                <li>
+                                                    <Link className="dropdown-item" href="/connexion/inscription">
+                                                        S'inscrire
+                                                    </Link>
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>
@@ -78,9 +184,8 @@ export default function Header(){
                                 <li><a className="dropdown-item" href="#">900g</a></li>
                             </ul>
                         </div>
-                        
+                        {/* {types.data.map(type => ( */}
                         <div className="dropdown">
-                        
                             <button type="button" className="btn btn-warning dropbtn m-2" /* data-bs-toggle="dropdown" */>
                             <Link className="dropdown-item" href="/products/Vanille/Vanille"><b>VANILLE</b></Link>
                             </button>
@@ -92,6 +197,7 @@ export default function Header(){
                                 <li><a className="dropdown-item" href="#">Extrait</a></li>
                             </ul>
                         </div>
+                        {/* ))} */}
                         <div className="dropdown">
                             <button type="button" className="btn btn-warning dropbtn m-2" /* data-bs-toggle="dropdown" */>
                                 <b>THE</b>
@@ -114,6 +220,7 @@ export default function Header(){
                     </nav>
                 </header>
             </div>
-        
+        </>
     )
 }
+export default Header;

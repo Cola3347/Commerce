@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payed_articles",
+  "info": {
+    "singularName": "payed-article",
+    "pluralName": "payed-articles",
+    "displayName": "Payed Article",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}
