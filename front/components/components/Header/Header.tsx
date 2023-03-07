@@ -17,19 +17,21 @@ const Header = ( ) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        console.log('--je suis--'+ data.identifier + 'dont le mot de passe est '+ data.password + '--  dans--' + API_URL + '/api/auth/local');
+        
 
-        const getData = await fetch(`${API_URL}/api/auth/local`, {
+        const responseData = await Fetcher(`${API_URL}/api/auth/local`, {
             method : 'POST',
-            headers: {
+/*             mode: "no-cors",
+ */            headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                identifier: data.identifier,
-                password: data.password
-            })
+            body: {
+                "identifier": data.identifier,
+                "password": data.password
+            }
         });
-        const responseData = await  getData.json();
-        console.log(responseData);
         setToken(responseData);
     }
     const logout = () => {
@@ -39,6 +41,8 @@ const Header = ( ) => {
     const handleChange = (e) =>{
         setData({...data, [e.target.name] : [e.target.value]});
     };
+    
+
     return (
         <>
             <div className="top mb-5">
@@ -127,6 +131,7 @@ const Header = ( ) => {
                                                                     type="submit"
                                                                 >
                                                                     Login
+                                                                    
                                                                 </button>
                                                             </form>
                                                         </li>
