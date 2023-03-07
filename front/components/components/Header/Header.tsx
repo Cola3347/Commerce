@@ -28,8 +28,8 @@ const Header = ( ) => {
                 'Content-Type': 'application/json',
             },
             body: {
-                "identifier": data.identifier,
-                "password": data.password
+                identifier: data.identifier,
+                password: data.password
             }
         });
         setToken(responseData);
