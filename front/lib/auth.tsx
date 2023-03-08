@@ -8,7 +8,7 @@ export const setToken = (data) => {
     if (typeof window === 'undefined') {
       return;
     }
-  Cookies.set('id', data.user.id);
+  
   Cookies.set('username', data.user.username);
   Cookies.set('jwt', data.jwt);
 

@@ -5,43 +5,63 @@ import { API_URL } from "@/utils/urls";
 import { Fetcher } from "@/lib/api";
 import { setToken, unsetToken } from "@/lib/auth";
 import { useUser } from "@/lib/authContext";
+import axios from "axios";
+import { error } from "console";
 
 
-const Header = ( ) => {
+const Header = () => {
     const [data, setData] = useState({
-        identifier:'',
-        password:''
+        identifier: '',
+        password: ''
     });
-    
+
     const { user, loading } = useUser();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        console.log('--je suis--'+ data.identifier + 'dont le mot de passe est '+ data.password + '--  dans--' + API_URL + '/api/auth/local');
-        
 
-        const responseData = await Fetcher(`${API_URL}/api/auth/local`, {
-            method : 'POST',
-/*             mode: "no-cors",
- */            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: {
-                identifier: data.identifier,
-                password: data.password
-            }
-        });
-        setToken(responseData);
-    }
+        console.log('--je suis--' + data.identifier + 'dont le mot de passe est ' + data.password + '--  dans--' + API_URL + '/api/auth/local');
+
+       /*  axios
+            .post(`${API_URL}/api/auth/local`, {
+                identifier: `${data.identifier}`,
+                password: `${data.password}`,
+            })
+            .then(response => {
+                // Handle success.
+                console.log('Well done!');
+                console.log('User profile', response.data.user);
+                console.log('User token', response.data.jwt);
+            })
+            .catch(error => {
+                // Handle error.
+                console.log('An error occurred:', error.response);
+            }); */
+            
+        const responseData =  axios.post(`${API_URL}/api/auth/local`, {
+            // mode: "no-cors",
+                identifier: `${data.identifier}`,
+                password: `${data.password}`,
+        }).then(response => {
+            // Handle success.
+            console.log('Well done!');
+            console.log('User profile', response);
+            console.log('User token', response.data.jwt);
+        })
+            .catch(error => {
+                // Handle error.
+                console.log('An error occurred:', error.response);
+            });
+        setToken(responseData)
+    } 
     const logout = () => {
         unsetToken();
-      };
-    
-    const handleChange = (e) =>{
-        setData({...data, [e.target.name] : [e.target.value]});
     };
-    
+
+    const handleChange = (e) => {
+        setData({ ...data, [e.target.name]: [e.target.value] });
+    };
+
 
     return (
         <>
@@ -78,7 +98,7 @@ const Header = ( ) => {
                                                         Se connecter
                                                     </Link>
                                                 </li> */}
-                                                {!loading && 
+                                                {!loading &&
                                                     (user ? (
                                                         <li>
                                                             <Link href='/test/profile'>
@@ -87,40 +107,40 @@ const Header = ( ) => {
                                                                 </a>
                                                             </Link>
                                                         </li>
-                                                        ):(
-                                                            ''
+                                                    ) : (
+                                                        ''
                                                     ))
                                                 }
-                                                {!loading && 
+                                                {!loading &&
                                                     (user ? (
                                                         <li>
                                                             <Link href='/test/profile'>
                                                                 <a className="md:p-2 py-2 block hoover:text-orange-400"
                                                                     onClick={logout}
-                                                                    style={{cursor: 'pointer'}}
+                                                                    style={{ cursor: 'pointer' }}
                                                                 >
                                                                     Logout
                                                                 </a>
                                                             </Link>
                                                         </li>
-                                                        ):(
-                                                            ''
+                                                    ) : (
+                                                        ''
                                                     ))
                                                 }
                                                 {!loading && !user ? (
                                                     <>
                                                         <li>
                                                             <form onSubmit={handleSubmit} className="form-inline">
-                                                                <input type="text" 
-                                                                    name="identifier" 
+                                                                <input type="text"
+                                                                    name="identifier"
                                                                     onChange={handleChange}
                                                                     placeholder='Username'
                                                                     className="md: p-2 form-input py-2 rounded mx-2"
                                                                     value={data.identifier}
                                                                     required
                                                                 />
-                                                                <input type="password" 
-                                                                    name="password" 
+                                                                <input type="password"
+                                                                    name="password"
                                                                     onChange={handleChange}
                                                                     placeholder='Password'
                                                                     className="md: p-2 form-input py-2 rounded mx-2"
@@ -131,13 +151,13 @@ const Header = ( ) => {
                                                                     type="submit"
                                                                 >
                                                                     Login
-                                                                    
+
                                                                 </button>
                                                             </form>
                                                         </li>
                                                     </>
-                                                     ):(
-                                                        ''
+                                                ) : (
+                                                    ''
                                                 )
 
                                                 }
@@ -192,10 +212,10 @@ const Header = ( ) => {
                         {/* {types.data.map(type => ( */}
                         <div className="dropdown">
                             <button type="button" className="btn btn-warning dropbtn m-2" /* data-bs-toggle="dropdown" */>
-                            <Link className="dropdown-item" href="/products/Vanille/Vanille"><b>VANILLE</b></Link>
+                                <Link className="dropdown-item" href="/products/Vanille/Vanille"><b>VANILLE</b></Link>
                             </button>
-                        
-                            
+
+
                             <ul className="dropdown-content">
                                 <li><a className="dropdown-item" href="#">En Gousse</a></li>
                                 <li><a className="dropdown-item" href="#">En Poudre</a></li>
